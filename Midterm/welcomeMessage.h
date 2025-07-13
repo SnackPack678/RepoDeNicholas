@@ -20,9 +20,9 @@ inline void welcomeMessage(){
             << "• Resetting a task's priorty level\n\n"
             << "Features include:\n\n"
             << "• Display all tasks\n"
-            << "• Filter tasks by name (Binary Search)\n"
-            << "• Save TaskManager™ sessions\n\n"
-            << "*** Be advised: Every session with TaskManager™ will be saved to a text document for your convenience!"
+            << "• sortTasksByName algorithm + binarySearch algorithm\n"
+            << "• Save/load TaskManager™ sessions\n\n"
+            << "*** Be advised: Every session with TaskManager™ can be both saved and loaded to a text file for your convenience!"
             << "\n\n******************************************************************\n\n";
 }
 #endif
