@@ -1,73 +1,37 @@
-/*
- 
- TODO: OBJECTIVE:
- 
- Design and build a C++ program of your choice that demonstrates your understanding of core programming concepts covered so far. You'll apply a variety of tools and techniques including:
- 
- • Pointers
- • Dynamic memory
- • Binary search
- • File I/O
- • Classes
- 
- This project gives you the freedom to choose your program idea, as long as it meaningfully applies the required concepts.
- 
- -----------------------------------------------------------------------------------------------------------------------------------
- 
- TODO: Your Midterm Must Include:
- 
- • Data types and data sizes
- • File types (e.g., .txt for data I/O)
- • Use of pointers
- • arrays
- • A binary search algorithm (on any other search)
- • Use of strings
- • File I/O (read from or write to a file)
- • At least two classes (with meaningful interaction)
- 
- -----------------------------------------------------------------------------------------------------------------------------------
-
- TODO: output.pdf Must Contain:
- 
- • A brief explanation of your program (what it does, how it works)
- • A list of concepts used (from the list above)
- • Screenshots of your program running (showing all program screens, such as input prompts, output results, etc.)
- • Mention any challenges you faced and how you solved them
- 
- -----------------------------------------------------------------------------------------------------------------------------------
+/* ▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀
  
  TODO: My Project Description:
  
 console-based to-do list where a user can:
-
- • Add tasks (title, description, priority) ✅
- • Sort tasks by priority.
- • Search tasks by title using binary search (sorted alphabetically).
- • Save/load tasks to/from a file.
- • Store tasks dynamically.
  
-Key concepts covered:
+ • Load a previous session
+
+ • Open a Welcome message that describes what the user can do
+ • Create Tasks (title, description, priority) ✅
+ • Rename Tasks
+ • Reset Task Description .
+ • Reset Task Priority Level
+ • Delete Tasks
+ • Display All Tasks (Generally)
+ • Search for a Task by Name
+ • Save session
+ • Quit session
+  
+ TODO: Key concepts covered:
+
+  • Classes: ✅ Uses a single main class (Task) to model tasks.
+  • Header Files: ✅ Uses separate header files for the menu and welcome message.
+  • Dynamic Task Array: ✅ Uses a fixed-size array to store up to 5 tasks dynamically at runtime.
+  • Binary Search: ✅ Can search for a task by name using a binary search after sorting.
+  • File I/O: ✅ Saves tasks to a custom .txt file and loads them back in at startup.
+  
+  BONUS:
+  • Input Validation: ✅ Validates user input for task creation, edits, deletes.
+  • Sorting: ✅ Sorts tasks by name to fulfill binary search requirements.
+  • Basic Console UI: ✅ Provides a simple menu system for user interaction.
+  • Optional File Path Output: ✅ User is given the direct file path to .txt file (Option 9)
  
- • Classes: Task ✅ and ToDoList.
- • Dynamic memory: Add tasks dynamically.
- • Pointers: Manage tasks with pointers or use a pointer-based linked list.
- • Binary search: Find tasks by title or ID.
- • File I/O: Save tasks so they persist.
- 
- 
- * Classes: Task and ToDoList.
- 
- * Header Files ✅
-
- * Dynamic memory: Add tasks dynamically.
-
- * Pointers: Manage tasks with pointers or use a pointer-based linked list.
-
- * Binary search: Find tasks by title or ID.
-
- * File I/O: Save tasks so they persist.
-
- */
+ ▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀ */
 
 #include <iostream>
 #include <string>
@@ -77,16 +41,14 @@ class Task {
 public:
     string taskName = "No title";
     string description = "No description";
-    short priortyLevel = 0;
+    short priorityLevel = 0;
     
-    Task(){
-        //cout << "\n**** Task() created successfully ****" << endl;
-    };
+    Task(){};
     
     Task(string tn, string d, short pl){
         taskName = tn;
         description = d;
-        priortyLevel = pl;
+        priorityLevel = pl;
         cout << "\n**** Task(string, string short) created successfully ****" << endl;
     }
     
@@ -101,7 +63,7 @@ public:
         while (name.length() > 20 || name.empty()) {
             cout << "\nEnter Title (20 Characters or Less): ";
             getline(cin, name);
-
+            
             if (name.length() > 20) {
                 cout << "--- ERROR: Title must be 20 characters or less." << endl;
             } else if (name.empty()) {
@@ -112,103 +74,389 @@ public:
         while (desc.length() > 75 || desc.empty()) {
             cout << "\nEnter Description (75 Characters or Less): ";
             getline(cin, desc);
-
+            
             if (desc.length() > 75) {
                 cout << "--- ERROR: Description must be 75 characters or less." << endl;
             } else if (desc.empty()) {
                 cout << "--- ERROR: Description cannot be empty." << endl;
             }
         }
-
+        
         while (pri >= 11 || pri <= 0){
             cout << "\nPriorty level (1-10): ";
             cin >> pri;
+            cin.ignore();
             
             if (pri >= 11 || pri <= 0){
                 cout << "--- ERROR: Priority level must be within range (1-10)" << endl;
             }
         }
-            
+        
+        taskName = name;
+        description = desc;
+        priorityLevel = pri;
+        
         cout << "\n\t\t\t\t - Task Breakdown - \n" << endl;
         cout << "Task: " << name << " | Priorty Level: " << pri << endl;
         cout << "\nDescription: " << desc << endl;
         cout << "\n******************************************************************" << endl;
     }
     
+    
+    string getTaskName()const{return taskName;}
+    string getTaskDesc()const{return description;}
+    short getTaskPri()const{return priorityLevel;}
+    
+    
     void renameTask(){
         string newName;
-        string oldName = taskName;
-        cout << "\nEnter new name: ";
+        string oldName = getTaskName();
+        cout << "\n\tEnter new name: ";
         getline(cin, newName);
-        cout << endl;
         taskName = newName;
-        cout << "\nSuccessfully changed Task Name!\n"
-        << "New = " << taskName << " | Previous = " << oldName << endl;
+        cout << "\t*** Successfully changed Task Name!\n\n"
+        << "\t• New = " << taskName << "\n\n\t• Previous = " << oldName
+        << "\n\n******************************************************************\n" << endl;
     }
+    
+    void renameDesc(){
+        string newDesc;
+        string oldDesc = getTaskDesc();
+        cout << "\n\tEnter new Description: ";
+        getline(cin, newDesc);
+        description = newDesc;
+        cout << "\t*** Successfully changed Task Description!\n\n"
+        << "\t• New = " << description << "\n\n\t• Previous = " << oldDesc
+        << "\n\n******************************************************************" << endl;
         
+    }
+    
+    void resetPriLvl(){
+        
+        short newPriLvl = 0;
+        short oldPriLvl = getTaskPri();
+        
+        while (newPriLvl < 1 || newPriLvl > 10) {
+            cout << "\n\tEnter new Priority level (1-10): ";
+            cin >> newPriLvl;
+            cin.ignore();
+            
+            if (newPriLvl < 1 || newPriLvl > 10) {
+                cout << "--- ERROR: Priority level must be within range (1-10)" << endl;
+            }
+        }
+        priorityLevel = newPriLvl;
+        cout << "\t*** Successfully changed Task Priority Level!\n\n"
+        << "\t• New = " << priorityLevel << "\n\n\t• Previous = " << oldPriLvl
+        << "\n\n******************************************************************" << endl;
+    }
+    
 };
 
+// ----------------------------------------------------------------------------------------
 
+int binarySearch(Task arr[], int size, string target) {
+    int low = 0;
+    int high = size - 1;
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        if (arr[mid].getTaskName() == target) {
+            return mid;
+        } else if (arr[mid].getTaskName() < target) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+    return -1;
+}
+
+void sortTasksByName(Task arr[], int size) {
+    for (int i = 0; i < size - 1; ++i) {
+        for (int j = 0; j < size - i - 1; ++j) {
+            if (arr[j].getTaskName() > arr[j + 1].getTaskName()) {
+                swap(arr[j], arr[j + 1]);
+            }
+        }
+    }
+}
+
+// ----------------------------------------------------------------------------------------
 
 #include <fstream>
 #include "menu.h"
 #include "welcomeMessage.h"
 
 int main(){
-        
+    
     const short MAX = 5;
     Task taskList[MAX];
     
-    menu();
+    short taskCount = 0;
+    short num = 0;
+    short ask = 0;
     
-    short num = 1;
-    cout << "*** Enter a number: ";
-    cin >> num;
     
-    while (num <= 0 || num >= 11){
-        cout << "--- ERROR: Entry must be 1-10!" << endl;
-        cout << "\n*** Enter a number: ";
+    cout << "\nLoad a previous file? (0/1): ";
+    cin >> ask;
+    cin.ignore();
+    
+    if(ask == 1){
+        string filename = "";
+        cout << "\n\t*** Enter the name of the file: ";
+        getline(cin, filename);
+        
+        ifstream inFile(filename);
+        
+        if(!inFile){
+            cout << "\n\t--- ERROR: Could not open file! ---\n";
+        } else {
+            string name, desc, line;
+            short pri;
+            while (getline(inFile, line)) {
+                if (line.find("Name: ") == 0) {
+                    name = line.substr(6);
+                } else if (line.find("Description: ") == 0) {
+                    desc = line.substr(13);
+                } else if (line.find("Priority: ") == 0) {
+                    pri = stoi(line.substr(10));
+                    taskList[taskCount] = Task(name, desc, pri);
+                    taskCount++;
+                }
+            }
+            inFile.close();
+            cout << "\n\t*** Successfully loaded (" << taskCount << ") tasks from " << filename << " ***\n";
+        }
+    }
+    
+    cout << "\n▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀\n" << endl;
+    
+    while (true){
+        menu();
+        
+        cout << "\t|\t*** Enter a number: ";
         cin >> num;
+        cin.ignore();
+        cout << "\t 一一一一一一一一一一一一一一一一一一一一一一一一一一一" << endl;
+        while (num <= 0 || num >= 12){
+            cout << "\t\t--- ERROR: Entry must be 1-11!" << endl;
+            cout << "\n\t\t*** Enter a number: ";
+            cin >> num;
+            cin.ignore();
+            cout << "\t 一一一一一一一一一一一一一一一一一一一一一一一一一一一" << endl;
+        }
+        cout << "\n******************************************************************" << endl;
+        
+        
+        switch (num){
+                
+            case 1:
+                welcomeMessage();
+                break;
+                
+            case 2:
+                if (taskCount < MAX) {
+                    taskList[taskCount].createTask();
+                    taskCount++;
+                } else {
+                    cout << "\n\t--- ERROR: Task list is full!"
+                    << "\n\n\t--- MUST delete a task BEFORE another can be added!"
+                    << "\n\n******************************************************************\n" << endl;
+                }
+                break;
+                
+            case 3:
+                if (taskCount == 0) {
+                    cout << "\n\t--- ERROR: No tasks to rename!"
+                    << "\n\n******************************************************************\n" << endl;
+                } else {
+                    cout << "\n\t*** Current Tasks ***\n\n";
+                    for (int i = 0; i < taskCount; ++i) {
+                        cout << "\t" << (i + 1) << ". "
+                        << taskList[i].getTaskName() << endl;
+                    }
+                    
+                    int renameIndex;
+                    cout << "\n\tEnter the number of the task to rename: ";
+                    cin >> renameIndex;
+                    cin.ignore();
+                    
+                    if (renameIndex < 1 || renameIndex > taskCount) {
+                        cout << "\n\t--- ERROR: Invalid task number! ---\n"
+                        << "\n******************************************************************\n" << endl;
+                    } else {
+                        taskList[renameIndex - 1].renameTask();
+                    }
+                }
+                break;
+                
+            case 4:
+                if (taskCount == 0) {
+                    cout << "\n\t--- ERROR: No tasks to update description!"
+                    << "\n\n******************************************************************\n" << endl;
+                } else {
+                    cout << "\n\t*** Current Tasks ***\n\n";
+                    for (int i = 0; i < taskCount; ++i) {
+                        cout << "\t" << (i + 1) << ". "
+                        << taskList[i].getTaskName() << endl;
+                    }
+                    
+                    int descIndex;
+                    cout << "\n\tEnter the number of the task to rename description: ";
+                    cin >> descIndex;
+                    cin.ignore();
+                    
+                    if (descIndex < 1 || descIndex > taskCount) {
+                        cout << "\n\t--- ERROR: Invalid task number! ---\n"
+                        << "\n******************************************************************\n" << endl;
+                    } else {
+                        taskList[descIndex - 1].renameDesc();
+                    }
+                }
+                break;
+                
+            case 5:
+                if (taskCount == 0) {
+                    cout << "\n\t--- ERROR: No tasks to update Priorty Level!"
+                    << "\n\n******************************************************************\n" << endl;
+                } else {
+                    cout << "\n\t*** Current Tasks ***\n\n";
+                    for (int i = 0; i < taskCount; ++i) {
+                        cout << "\t" << (i + 1) << ". "
+                        << taskList[i].getTaskName() << endl;
+                    }
+                    
+                    int priIndex;
+                    cout << "\n\tEnter the number of the task to update Priority Level: ";
+                    cin >> priIndex;
+                    cin.ignore();
+                    
+                    if (priIndex < 1 || priIndex > taskCount) {
+                        cout << "\n\t--- ERROR: Invalid task number! ---\n"
+                        << "\n******************************************************************\n" << endl;
+                    } else {
+                        taskList[priIndex - 1].resetPriLvl();
+                    }
+                }
+                break;
+                
+            case 6:
+                if (taskCount == 0) {
+                    cout << "\n\t--- ERROR: Task list is empty!"
+                    << "\n\n******************************************************************\n" << endl;
+                } else {
+                    cout << "\n\t*** Current Tasks ***\n\n";
+                    for (int i = 0; i < taskCount; ++i) {
+                        cout << "\t" << (i + 1) << ". "
+                        << taskList[i].getTaskName() << endl;
+                    }
+                    
+                    int delIndex;
+                    cout << "\n\tEnter the number of the task to delete: ";
+                    cin >> delIndex;
+                    cin.ignore();
+                    
+                    if (delIndex < 1 || delIndex > taskCount) {
+                        cout << "\n\t--- ERROR: Invalid task number! ---\n"
+                        << "\n******************************************************************\n" << endl;
+                    } else {
+                        for (int i = delIndex - 1; i < taskCount - 1; ++i) {
+                            taskList[i] = taskList[i + 1];
+                        }
+                        taskList[taskCount - 1] = Task();
+                        taskCount--;
+                        
+                        cout << "\n\t*** Task deleted successfully! ***\n"
+                        << "\n******************************************************************" << endl;
+                    }
+                }
+                break;
+                
+            case 7:
+                if (taskCount == 0) {
+                    cout << "\n\t--- ERROR: Task list is empty!"
+                    << "\n\n******************************************************************\n" << endl;
+                } else {
+                    cout << "\n\t*** Current Tasks ***\n\n";
+                    for (int i = 0; i < taskCount; ++i) {
+                        cout << "\t" << (i + 1) << ". "
+                        << taskList[i].getTaskName() << "\n";
+                    }
+                    cout << "\n\n******************************************************************" << endl;
+                }
+                break;
+                
+            case 8:
+                if (taskCount == 0) {
+                    cout << "\n\t--- ERROR: Task list is empty!"
+                    << "\n\n******************************************************************\n" << endl;
+                } else {
+                    string target;
+                    cout << "\n\tEnter the task name to search for: ";
+                    getline(cin, target);
+                    
+                    sortTasksByName(taskList, taskCount); // Ensuring that name is sorted 1st and foremeost
+                    
+                    int result = binarySearch(taskList, taskCount, target);
+                    if (result != -1) {
+                        cout << "\n\t*** Task Found! ***\n\n"
+                        << "\t• Task: " << taskList[result].getTaskName()
+                        << "\n\t• Description: " << taskList[result].getTaskDesc()
+                        << "\n\t• Priority Level: " << taskList[result].getTaskPri()
+                        << "\n\n******************************************************************" << endl;
+                    } else {
+                        cout << "\n\t--- Task NOT found! ---\n"
+                        << "\n******************************************************************" << endl;
+                    }
+                }
+                break;
+                
+            case 9:
+                if (taskCount == 0) {
+                    cout << "\n\t--- ERROR: No tasks to save!"
+                    << "\n\n******************************************************************\n" << endl;
+                } else {
+                    string filename;
+                    cout << "\n\tEnter filename to save to (Ex: tasks.txt): ";
+                    getline(cin, filename);
+                    
+                    ofstream fout(filename);
+                    
+                    if (!fout) {
+                        cout << "\n\t--- ERROR: Could not create file! ---\n"
+                        << "\n******************************************************************\n" << endl;
+                    } else {
+                        for (int i = 0; i < taskCount; ++i) {
+                            fout << "Task " << (i + 1) << ":\n";
+                            fout << "Name: " << taskList[i].getTaskName() << "\n";
+                            fout << "Description: " << taskList[i].getTaskDesc() << "\n";
+                            fout << "Priority: " << taskList[i].getTaskPri() << "\n";
+                            fout << "---------------------------\n";
+                        }
+                        fout.close();
+                        
+                        short choice = 0;
+                        cout << "\t*** Show file path? (1/0): ";
+                        cin >> choice;
+                        cin.ignore();
+                        
+                        if (choice == 1){
+                            filesystem::path currentPath = filesystem::current_path();
+                            string pathString = currentPath.string();
+                            cout << "\n\t*** " << pathString << endl;
+                        }
+                        
+                        cout << "\n\t*** Tasks saved to " << filename << " ***\n"
+                        << "\n******************************************************************" << endl;
+                    }
+                }
+                break;
+                
+            case 10:
+                cout << "\n\t*** Successfully ended TaskManager™\n\n";
+                return 0;
+            default:
+                cout << "\n--- ERROR: Invalid option\n";
+        }
     }
-    
-    cout << "\n******************************************************************" << endl;
-
-    
-    switch (num){
-        case 1:
-            welcomeMessage();
-            break;
-        case 2:
-            taskList[0].createTask();
-            break;
-        case 3:
-            taskList[0].renameTask();
-            break;
-        case 4:
-            //4
-            break;
-        case 5:
-            //5
-            break;
-        case 6:
-            //6
-            break;
-        case 7:
-            //7
-            break;
-        case 8:
-            //8
-            break;
-        case 9:
-            //9
-            break;
-        case 10:
-            //10
-            break;
-        case 11:
-            //11
-            break;
-    }
-    cout << endl;
 }
-
