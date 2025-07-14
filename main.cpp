@@ -1,36 +1,41 @@
 //
 //  main.cpp
-//  organizingCodeWithHeaderFiles
+//  inheritanceMethodOverriding
 //
 //  Created by Nicholas Rubio on 7/13/25.
 //
 
 #include <iostream>
-#include "Item.h"
-
-Item::Item() {
-    name = "Unknown";
-    quantity = 0;
-}
-
-Item::Item(string itemName, int itemQty) {
-    name = itemName;
-    quantity = itemQty;
-}
-
-void Item::display() {
-    cout << "Item: " << name << ", Quantity: " << quantity << endl;
-}
 
 using namespace std;
 
+// Base class
+class User {
+public:
+    virtual void accessLevel() {
+        cout << "General Access\n";
+    }
+};
+
+// Derived from User
+class Employee : public User {
+public:
+    void accessLevel() override {
+        cout << "Employee Access\n";
+    }
+};
+
+// Derived from Employee
+class InventoryManager : public Employee {
+public:
+    void accessLevel() override {
+        cout << "Full Inventory Management Access\n";
+    }
+};
+
 int main() {
-    Item item1("Notebook", 10);
-    Item item2("Pencil", 50);
-
-    item1.display();
-    item2.display();
-
+    InventoryManager mgr;
+    mgr.accessLevel(); // Should print: Full Inventory Management Access
     return 0;
 }
 
