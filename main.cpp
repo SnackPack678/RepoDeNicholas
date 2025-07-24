@@ -1,91 +1,82 @@
-/* ▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀
- 
- TODO: My Program Description - Explain Logic and File Structure
- 
- • The program has a "dataReader" class which handles file input logic.
- • "Main" starts off by creating a dataReader object, called "test"
- • "test" then calls it's method readFile(); test.readFile() flows as such:
- 
- 1.) Loads the input file "world_air_quality_with_locations.csv" using an absoutle file path (local machine)
- 2.) if input file is unsuccessful in opening: print error message (rest of code doesn't execute)
- 
-    3.) else: print success message, legend message
-    4.) The program loops through the input file, skips the first field (which is the row number or ID)
-    5.) Prints up to 5 fields per row for 10 rows max.
-    6.) After reading the specified rows and fields, the input file is closed
-    7.) Print "file closed" message
- 
-▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀ */
+#include <wx/wx.h>
+#include "Task.h" // <- Task.h is a copy/paste of the Task class from TaskManager™
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
-using namespace std;
+#include <vector> // Using vectors here to dynamically change the size of taskList
 
-class dataReader{
+std::vector<Task> taskList;
+
+class MyApp : public wxApp {
 public:
-    
-    dataReader(){}
-    
-    void readFile(){
-        ifstream inFile("/Users/nicholasrubio/Downloads/world_air_quality_with_locations.csv");
-        
-        if (!inFile.is_open()) { cout
-            << "\n▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀\n"
-            << "          *** ERROR: File not open! ***"
-            << "\n▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀\n";
-        } else { cout
-            << "\n▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀\n"
-            << "          *** SUCCESS: File opened! ***"
-            << "\n▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀\n";
-            
-            
-            string line;
-            
-            if (getline(inFile, line)) {
-                cout << "\n\t\t\t\t*** HEADERS ***\n"
-                << "\t\t\tCountry Code = FIELD 1\n"
-                << "\t\t\tCity         = FIELD 2\n"
-                << "\t\t\tLocation     = FIELD 3\n"
-                << "\t\t\tLatitude     = FIELD 4\n"
-                << "\t\t\tLongitude    = FIELD 5\n"
-                << "\n*** Disclaimer: Information missing? Data unprovided.\n";
-            }
-            
-            int rowCount = 0;
-            
-            while (getline(inFile, line) && rowCount < 10) {
-                istringstream iss(line);
-                
-                string field;
-                getline(iss, field, ',');
-                
-                cout << "\n\t=== ROW " << (rowCount + 1) << " ===" << endl;
-                
-                int fieldCount = 0;
-                
-                while (getline(iss, field, ',') && fieldCount < 5) {
-                    cout << "\tFIELD " << (fieldCount + 1) << ": " << field << endl;
-                    ++fieldCount;
-                    
-                } // INNER while loop
-                ++rowCount;
-            } // OUTTER while loop
-            
-            inFile.close();
-            { cout
-                << "\n▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀\n"
-                << "              *** File closed ***"
-                << "\n▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀▶◀\n";
-            }
-        } // END OF ELSE
-    }
+    virtual bool OnInit();
 };
 
-int main(){
-    dataReader test;
-    test.readFile();
-    cout << endl;
-    return 0;
+class MyFrame : public wxFrame {
+public:
+    MyFrame(const wxString& title);
+
+private:
+    wxTextCtrl* titleInput;
+    wxTextCtrl* descInput;
+    wxTextCtrl* priInput;
+
+    void OnCreateTask(wxCommandEvent& event);
+};
+
+wxIMPLEMENT_APP(MyApp);
+
+bool MyApp::OnInit() {
+    MyFrame *frame = new MyFrame("TaskManager™ GUI");// Added my Program's name on the window
+    frame->Show(true);
+    return true;
 }
+
+MyFrame::MyFrame(const wxString& title)
+    : wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, wxSize(400, 300))
+{
+    wxPanel* panel = new wxPanel(this, wxID_ANY);
+
+    wxStaticText* titleLabel = new wxStaticText(panel, wxID_ANY, "Title (max 20):", wxPoint(20, 20));      // Set Title
+    titleInput = new wxTextCtrl(panel, wxID_ANY, "", wxPoint(150, 20), wxSize(200, -1));
+
+    wxStaticText* descLabel = new wxStaticText(panel, wxID_ANY, "Description (max 75):", wxPoint(20, 60)); // Set Description 
+    descInput = new wxTextCtrl(panel, wxID_ANY, "", wxPoint(150, 60), wxSize(200, -1));
+
+    wxStaticText* priLabel = new wxStaticText(panel, wxID_ANY, "Priority (1-10):", wxPoint(20, 100));      // Set Priority
+    priInput = new wxTextCtrl(panel, wxID_ANY, "", wxPoint(150, 100), wxSize(200, -1));
+
+    wxButton* createButton = new wxButton(panel, wxID_ANY, "Create Task", wxPoint(150, 150));              // Create Task Button
+    createButton->Bind(wxEVT_BUTTON, &MyFrame::OnCreateTask, this);
+}
+
+void MyFrame::OnCreateTask(wxCommandEvent& event) {
+    wxString title = titleInput->GetValue();
+    wxString desc = descInput->GetValue();
+    wxString priStr = priInput->GetValue();
+
+    if (title.IsEmpty() || title.Length() > 20) {                                            // Error checker for Title
+        wxMessageBox("Title must be 1-20 characters.", "Error", wxOK | wxICON_ERROR);        
+        return;
+    }
+    if (desc.IsEmpty() || desc.Length() > 75) {                                              // Error checker for Description
+        wxMessageBox("Description must be 1-75 characters.", "Error", wxOK | wxICON_ERROR);    
+        return;
+    }
+
+    long priority;
+    if (!priStr.ToLong(&priority) || priority < 1 || priority > 10) {                        // Error checker for Priority
+        wxMessageBox("Priority must be a number from 1-10.", "Error", wxOK | wxICON_ERROR); 
+        return;
+    }
+
+  
+    Task t(std::string(title.mb_str()), std::string(desc.mb_str()), (short)priority);       // Task Constructor 
+    taskList.push_back(t);                                                                  // taskList grows by one(1)
+
+    wxMessageBox("Task created successfully!", "Success", wxOK | wxICON_INFORMATION);       // Confirmation message
+
+    
+    titleInput->Clear(); // clear title input
+    descInput->Clear();  // clear description input
+    priInput->Clear();   // clear priority input
+}
+
