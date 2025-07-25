@@ -1,0 +1,21 @@
+Steps for running the GUI:
+
+1.) cd /Users/nicholasrubio/TaskManagerGUI
+2.) Enter: ./TaskManagerGUI
+
+	TaskManager™'s GUI is only capable of:
+
+	• Creating a new Task
+	• Naming the Task
+	• Describing the Task
+	• Setting the Priority Level of the Task
+
+* It's important to note that despite TaskManager™' GUI limitation,
+  IT STILL follows the constraints set fourth by the source code 
+  from TaskManager™ main.cpp file. Meaning, it still:
+
+	• Checks character length constraint of name
+	• Checks character length constraint of description
+	• Ensures priorityLevel is within range (1-10)
+	• Null checking is built in
+	• Warning/Error messages are displayed to user  
