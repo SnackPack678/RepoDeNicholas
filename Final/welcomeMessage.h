@@ -1,6 +1,6 @@
 //
 //  welcomeMessage.h
-//  TaskManager-Final
+//  TaskManager-Midterm
 //
 
 #ifndef WELCOMEMESSAGE_H // prevents multiple inclusions
@@ -11,7 +11,7 @@ using namespace std;
 
 inline void welcomeMessage(){
     cout << "\n\t\t\t\t\t\t\tWelcome to TaskManager™!\n\n"
-            << "In this console-based to-do-list, you can store and manage up to FIFTY tasks at a time!\n\n"
+            << "In this console-based to-do-list, you can store and manage up to FIVE tasks at a time!\n\n"
             << "As a user, your privileges include:\n\n"
             << "• Creating a task\n"
             << "• Deleting a task\n"
@@ -26,3 +26,4 @@ inline void welcomeMessage(){
             << "\n\n██████████████████████████████████████████████████████████████████\n" << endl;
 }
 #endif
+

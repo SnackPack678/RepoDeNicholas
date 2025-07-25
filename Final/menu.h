@@ -1,6 +1,8 @@
 //
 //  menu.h
-//  TaskManager-Final
+//  TaskManager-Midterm
+//
+//  Created by Nicholas Rubio on 7/11/25.
 //
 
 #ifndef MENU_H // prevents multiple inclusions
@@ -25,3 +27,4 @@ inline void menu(){
     << "\t▶\t10. Quit\t\t\t\t\t\t\t   ◀\n\t▶\t\t\t\t\t\t\t\t\t\t   ◀\n";
 }
 #endif
+
